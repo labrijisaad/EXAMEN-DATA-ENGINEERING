@@ -2,7 +2,6 @@ scikit-learn
 pandas
 jupyter
 torch
-scikit-learn
 umap-learn
 sentence-transformers
 transformers

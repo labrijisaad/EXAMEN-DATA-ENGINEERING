@@ -37,29 +37,28 @@ endif
 
 venv-install:
 	@echo "Installing dependencies in virtual environment..."
-	@pip install -r src/requirements.txt
+	pip install -r src/requirements.txt
 
 local-jupyter:
 	@echo "Running the jupyter notebooks locally within the virtual environment..."
-	@jupyter notebook
+	jupyter notebook
 
+local-run:
+	@echo "Running the application locally within the virtual environment..."
+	python src/main.py
 
-#local-run:
-#	@echo "Running the application locally within the virtual environment..."
-#	@python src/app.py
+build: venv-setup venv-install
+	@echo "Building Docker image..."
+	docker build -t $(DOCKER_IMAGE_NAME):$(GIT_HASH) --build-arg TRAIN_MODEL=$(TRAIN_MODEL) .
+	@echo "Docker image built with tag: $(DOCKER_IMAGE_NAME):$(GIT_HASH)"
 
-#build: venv-setup venv-install
-#	@echo "Building Docker image..."
-#	@docker build -t $(DOCKER_IMAGE_NAME):$(GIT_HASH) --build-arg TRAIN_MODEL=$(TRAIN_MODEL) .
-#	@echo "Docker image built with tag: $(DOCKER_IMAGE_NAME):$(GIT_HASH)"
-#
-#run:
-#	@echo "Running Docker container..."
-#	@-docker rm -f $(DOCKER_CONTAINER_NAME)
-#	@docker run -it --name $(DOCKER_CONTAINER_NAME) -v $(DATA_PATH):/app/data $(DOCKER_IMAGE_NAME):$(GIT_HASH)
+run:
+	@echo "Running Docker container..."
+	@-docker rm -f $(DOCKER_CONTAINER_NAME)
+	@docker run -it --name $(DOCKER_CONTAINER_NAME) -v $(DATA_PATH):/app/data $(DOCKER_IMAGE_NAME):$(GIT_HASH)
 
-# clean:
-# 	@echo "Cleaning up Docker container and image..."
-# 	@docker rm -f $(DOCKER_CONTAINER_NAME) || true
-# 	@docker rmi -f $(DOCKER_IMAGE_NAME):$(GIT_HASH) || true
-# 	@echo "Cleanup complete."
+clean:
+	@echo "Cleaning up Docker container and image..."
+	@docker rm -f $(DOCKER_CONTAINER_NAME) || true
+	@docker rmi -f $(DOCKER_IMAGE_NAME):$(GIT_HASH) || true
+	@echo "Cleanup complete."
