@@ -14,7 +14,7 @@ RUN apt-get update
 RUN python -m venv venv
 
 # Install dependencies
-RUN venv/bin/python -m pip install --default-timeout=1000 --index-url https://pypi.org/simple/ --upgrade pip && \
+RUN venv/bin/python -m pip install --default-timeout=10000 --index-url https://pypi.org/simple/ --upgrade pip && \
     venv/bin/python -m pip install --index-url https://pypi.org/simple/ -r src/requirements.txt
 
 # Command to run on container start

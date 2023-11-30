@@ -1,7 +1,5 @@
 scikit-learn
 pandas
-jupyter
-torch
 umap-learn
 sentence-transformers
 transformers

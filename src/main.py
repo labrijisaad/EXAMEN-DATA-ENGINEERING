@@ -35,7 +35,7 @@ def main():
 
 def get_user_input():
     """Get user input for the preferred method."""
-    return input("Which method do you want to use on your data? ACP, T-SNE, UMAP? ").upper()
+    return input("Which method do you want to use on your data? ACP, TSNE, UMAP? ").upper()
 
 
 # Ensure the script is being run directly and not imported
